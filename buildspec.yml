@@ -11,3 +11,7 @@ phases:
   build:
     commands:
       - time docker build -t helloworld .
+
+artifacts:
+  files:
+  - '**/*'
