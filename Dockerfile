@@ -1,5 +1,5 @@
 FROM microsoft/dotnet:latest
-ENV TEST_1 "foo"
+ENV TEST_1 "bar"
 ENV TEST_2 "foo"
 ENV TEST_3 "foo"
 ENV TEST_4 "foo"
