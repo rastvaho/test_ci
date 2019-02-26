@@ -1,11 +1,11 @@
-FROM microsoft/dotnet:latest
-ENV TEST_1 "bar"
-ENV TEST_2 "foo"
-ENV TEST_3 "foo"
-ENV TEST_4 "foo"
-ENV TEST_5 "foo"
-ENV TEST_6 "foo"
-ENV TEST_7 "foo"
-ENV TEST_8 "foo"
-ENV TEST_9 "foo"
-ENV TEST_10 "foo"
+FROM golang:1.9 as builder
+RUN go get -d -v golang.org/x/net/html
+RUN go get -d -v github.com/alexellis/href-counter/
+WORKDIR /go/src/github.com/alexellis/href-counter/.
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /go/src/github.com/alexellis/href-counter/app .
+CMD ["./app"]
